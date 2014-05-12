@@ -11,6 +11,7 @@ float Fadd(float a, float b)
 	}
 	return result;
 }
+
 float Sub(float a, float b)
 {
 	float result;
@@ -22,6 +23,7 @@ float Sub(float a, float b)
 	}
 	return result;
 }
+
 float Multiply(float a, float b)
 {
 	float result;
@@ -29,6 +31,18 @@ float Multiply(float a, float b)
 	{
 		fld a;
 		fmul b;
+		fstp result;
+	}
+	return result;
+}
+
+float Divide(float a, float b)
+{
+	float result;
+	_asm
+	{
+		fld a;
+		fdiv b;
 		fstp result;
 	}
 	return result;

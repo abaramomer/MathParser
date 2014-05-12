@@ -1,3 +1,10 @@
-﻿  MathParser.cpp
+﻿  Parser.cpp
 d:\univer\scientificcalclator\mathparser\mathparser\parser.h(48): warning C4018: '<' : signed/unsigned mismatch
+d:\univer\scientificcalclator\mathparser\mathparser\parser.cpp(114): warning C4018: '<' : signed/unsigned mismatch
+d:\univer\scientificcalclator\mathparser\mathparser\parser.cpp(119): warning C4018: '<' : signed/unsigned mismatch
+d:\univer\scientificcalclator\mathparser\mathparser\parser.cpp(127): warning C4018: '>=' : signed/unsigned mismatch
+  MathParser.cpp
+d:\univer\scientificcalclator\mathparser\mathparser\parser.h(48): warning C4018: '<' : signed/unsigned mismatch
+  Calculator.cpp
+  Generating Code...
   MathParser.vcxproj -> D:\univer\ScientificCalclator\MathParser\Debug\MathParser.exe

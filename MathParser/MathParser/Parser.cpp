@@ -144,7 +144,7 @@ float Parser::Calculate()
 				res = Multiply(n1, n); 
 				break;
 			case '/': 
-				res = n1 / n; 
+				res = Divide(n1, n); 
 				break;
 			case '^':
 				res = pow(n1, n);
