@@ -3,13 +3,19 @@
 #include "Parser.h"
 #include "Calculator.h"
 #include <string>
+//
 bool isDigit(char c)
 {
 	if ((c >= '0' && c <= '9') || c == '.')
 		return true;
 	return false;
 }
-
+bool isOperation(string convertedString, int number)
+{
+	if (convertedString[number] == 's' && convertedString[number + 1] == '(')
+		return true;
+	return false;
+}
 //the priopity of the operation
 int Parser::OperationPriority(char c) 
 {
@@ -25,6 +31,8 @@ int Parser::OperationPriority(char c)
 			return 3;
 		case '^':
 			return 4;
+		case 's':
+			return 5;
 		default:
 			return 0;
 	}
@@ -50,8 +58,19 @@ void Parser::ConvertToPPN(string str)
 			was_op = 0;
 			continue;
 		}
-		else 
-			Add(32);
+
+		else
+		{
+			if (isOperation(str, currentStringNumber-1))
+			{
+				//Add('s');
+				//currentStringNumber++;
+			}
+			else
+				Add(32);
+		}
+			
+			
 		switch (currentSymbol) 
 		{
 		case '(': 
@@ -59,13 +78,13 @@ void Parser::ConvertToPPN(string str)
 			np++; 
 			was_op = 0; 
 			break;
-		case '*': case '/': case '+': case '-': case '^':
+		case '*': case '/': case '+': case '-': case '^': case 's':
 			if (currentStringNumber == str_in.length())
 				throw "Ошибка синтаксиса";
 
 			if (!was_op) 
 			{
-				was_op = 1;
+				//was_op = 1;
 				while (OperationPriority(currentSymbol) <= OperationPriority(op_stack.top())) 
 				{
 					Add(op_stack.pop());
@@ -131,23 +150,31 @@ float Parser::Calculate()
 				continue;
 		}
 		n = val_stack.pop();         //the first current number
-		n1 = val_stack.pop();        //the second current number
+		       //the second current number
 		switch (convertedString[i])
 		{
 			case '+': 
+				n1 = val_stack.pop();
 				res = Fadd(n1, n);
 				break;
 			case '-': 
+				n1 = val_stack.pop();
 				res = Sub(n1, n);
 				break;
 			case '*': 
+				n1 = val_stack.pop();
 				res = Multiply(n1, n); 
 				break;
 			case '/': 
+				n1 = val_stack.pop();
 				res = Divide(n1, n); 
 				break;
 			case '^':
+				n1 = val_stack.pop();
 				res = pow(n1, n);
+				break;
+			case 's':
+				res = sin(n);
 				break;
 			default: 
 				throw "Ошибка";
