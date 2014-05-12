@@ -34,7 +34,7 @@ int Parser::OperationPriority(char c)
 void Parser::ConvertToPPN(string str) 
 {
 	int was_op = 0, np = 0;    //if there were operations & brackets  
-	iin = 0;                   //index of input string
+	currentStringNumber = 0;                   //index of input string
 	convertedString.clear();
 	Stack<char> op_stack;
 	str_in = str;
@@ -42,7 +42,7 @@ void Parser::ConvertToPPN(string str)
 	if ((!isDigit(str_in[0])) && str_in[0] != '(')
 		throw "Ошибка синтаксиса";
 
-	while (nxtc() != EOS_IN) 
+	while (NextChar() != EOS_IN) 
 	{
 		if (isDigit(currentSymbol)) 
 		{
@@ -60,7 +60,7 @@ void Parser::ConvertToPPN(string str)
 			was_op = 0; 
 			break;
 		case '*': case '/': case '+': case '-': case '^':
-			if (iin == str_in.length())
+			if (currentStringNumber == str_in.length())
 				throw "Ошибка синтаксиса";
 
 			if (!was_op) 

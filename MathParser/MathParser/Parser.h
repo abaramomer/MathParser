@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 const char EOS = 0x01, EOS_IN = 0x02;
-const int sz = 40;
+const int sz = 400;
 using namespace std;
 
 template <class T> class Stack
@@ -41,12 +41,12 @@ class Parser
 {
 	char currentSymbol; 
 	string str_in, convertedString;
-	int iin;
+	int currentStringNumber;
 
-	char nxtc()
+	char NextChar()
 	{
-		if (iin < str_in.length())
-			currentSymbol = str_in[iin++];
+		if (currentStringNumber < str_in.length())
+			currentSymbol = str_in[currentStringNumber++];
 		else
 			currentSymbol = EOS_IN;
 		return currentSymbol;
