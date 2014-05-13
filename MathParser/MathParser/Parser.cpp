@@ -10,9 +10,9 @@ bool isDigit(char c)
 		return true;
 	return false;
 }
-bool isOperation(string convertedString, int number)
+bool isOperation(char c)
 {
-	if (convertedString[number] == 's' && convertedString[number + 1] == '(')
+	if (c >= 'a' && c <= 'z')
 		return true;
 	return false;
 }
@@ -47,7 +47,7 @@ void Parser::ConvertToPPN(string str)
 	Stack<char> op_stack;
 	str_in = str;
 
-	if ((!isDigit(str_in[0])) && str_in[0] != '(')
+	if ((!isDigit(str_in[0])) && !isOperation(str_in[0]) && str_in[0] != '(')
 		throw "Ошибка синтаксиса";
 
 	while (NextChar() != EOS_IN) 
@@ -61,13 +61,7 @@ void Parser::ConvertToPPN(string str)
 
 		else
 		{
-			if (isOperation(str, currentStringNumber-1))
-			{
-				//Add('s');
-				//currentStringNumber++;
-			}
-			else
-				Add(32);
+			Add(32);
 		}
 			
 			
@@ -84,7 +78,7 @@ void Parser::ConvertToPPN(string str)
 
 			if (!was_op) 
 			{
-				//was_op = 1;
+				
 				while (OperationPriority(currentSymbol) <= OperationPriority(op_stack.top())) 
 				{
 					Add(op_stack.pop());
@@ -100,9 +94,6 @@ void Parser::ConvertToPPN(string str)
 
 		case ')':
 		{
-			if (was_op)
-				throw "Ошибка синтаксиса";
-			else
 			while ((currentSymbol = op_stack.pop()) != '(' && np > 0)
 			{
 				Add(currentSymbol);
@@ -122,7 +113,6 @@ void Parser::ConvertToPPN(string str)
 		throw "Нарушение скобочной структуры";
 }
 
-//Calculateulate
 float Parser::Calculate() 
 {
 	float n1, n, res = 0.0; 
@@ -174,7 +164,7 @@ float Parser::Calculate()
 				res = pow(n1, n);
 				break;
 			case 's':
-				res = sin(n);
+				res = Sin(n);
 				break;
 			default: 
 				throw "Ошибка";

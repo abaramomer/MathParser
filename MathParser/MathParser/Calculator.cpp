@@ -47,3 +47,27 @@ float Divide(float a, float b)
 	}
 	return result;
 }
+
+float Sin(float a)
+{
+	float result;
+	_asm
+	{
+		fld a;
+		fsin;
+		fstp result;
+	}
+	return result;
+}
+
+float Cos(float a)
+{
+	float result;
+	_asm
+	{
+		fld a;
+		fcos;
+		fstp result;
+	}
+	return result;
+}
