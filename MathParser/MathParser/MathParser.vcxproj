@@ -79,13 +79,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssemblerCalculator.h" />
+    <ClInclude Include="AvaibleOperations.h" />
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="FunctionsMap.h" />
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="OperationsMap.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssemblerCalculator.cpp" />
+    <ClCompile Include="AvaibleOperations.cpp" />
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="FunctionsMap.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="MathParser.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="stdafx.cpp">

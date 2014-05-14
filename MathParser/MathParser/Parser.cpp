@@ -1,24 +1,14 @@
 
 #include "stdafx.h"
 #include "Parser.h"
-#include "Calculator.h"
+#include "Helper.h"
 #include <string>
 //
-bool isDigit(char c)
-{
-	if ((c >= '0' && c <= '9') || c == '.')
-		return true;
-	return false;
-}
-bool isOperation(char c)
-{
-	if (c >= 'a' && c <= 'z')
-		return true;
-	return false;
-}
 //the priopity of the operation
 int Parser::OperationPriority(char c) 
 {
+	if (isFunction(c))
+		return 5;
 	switch (c) 
 	{
 		case '(':
@@ -31,23 +21,20 @@ int Parser::OperationPriority(char c)
 			return 3;
 		case '^':
 			return 4;
-		case 's':
-			return 5;
 		default:
 			return 0;
 	}
 }
 
-//convert to PPN
 void Parser::ConvertToPPN(string str) 
 {
 	int was_op = 0, np = 0;    //if there were operations & brackets  
 	currentStringNumber = 0;                   //index of input string
 	convertedString.clear();
-	Stack<char> op_stack;
+	Stack<char> operationStack;
 	str_in = str;
 
-	if ((!isDigit(str_in[0])) && !isOperation(str_in[0]) && str_in[0] != '(')
+	if ((!isDigit(str_in[0])) && !isFunction(str_in[0]) && str_in[0] != '(')
 		throw "Ошибка синтаксиса";
 
 	while (NextChar() != EOS_IN) 
@@ -68,33 +55,16 @@ void Parser::ConvertToPPN(string str)
 		switch (currentSymbol) 
 		{
 		case '(': 
-			op_stack.push(currentSymbol); 
+			operationStack.push(currentSymbol); 
 			np++; 
 			was_op = 0; 
 			break;
-		case '*': case '/': case '+': case '-': case '^': case 's':
-			if (currentStringNumber == str_in.length())
-				throw "Ошибка синтаксиса";
-
-			if (!was_op) 
-			{
-				
-				while (OperationPriority(currentSymbol) <= OperationPriority(op_stack.top())) 
-				{
-					Add(op_stack.pop());
-				}
-				if (OperationPriority(currentSymbol) > OperationPriority(op_stack.top()))
-				{
-					op_stack.push(currentSymbol);
-				}
-				break;
-			}
-			else 
-				throw "Ошибка синтаксиса";
+		
+			
 
 		case ')':
 		{
-			while ((currentSymbol = op_stack.pop()) != '(' && np > 0)
+			while ((currentSymbol = operationStack.pop()) != '(' && np > 0)
 			{
 				Add(currentSymbol);
 			}
@@ -102,74 +72,25 @@ void Parser::ConvertToPPN(string str)
 			break;
 		}
 		default: 
+			if (operations->Contain(currentSymbol) && !was_op)
 			{
-				throw "Недопустимая литера во входной строке";
+				while (OperationPriority(currentSymbol) <= OperationPriority(operationStack.top()))
+				{
+					Add(operationStack.pop());
+				}
+				if (OperationPriority(currentSymbol) > OperationPriority(operationStack.top()))
+				{
+					operationStack.push(currentSymbol);
+				}
+				break;
 			}
+			else
+				throw "Ошибка синтаксиса";
 		}
 	}
-	while (op_stack.top() != EOS)
-		Add(op_stack.pop());
+	while (operationStack.top() != EOS)
+		Add(operationStack.pop());
 	if (np)
 		throw "Нарушение скобочной структуры";
 }
 
-float Parser::Calculate() 
-{
-	float n1, n, res = 0.0; 
-	int i;
-	Stack<float> val_stack;
-	string number;
-	number.clear();
-	for (i = 0; i < convertedString.length(); ++i) 
-	{
-		char c = convertedString[i];
-		if (c == 32)
-			continue;
-		while (i < convertedString.length() && isDigit(convertedString[i]))
-		{
-			number += convertedString[i++];
-		}
-		if (!number.empty()) 
-		{
-			val_stack.push((float)atof(number.c_str()));
-			number.clear();
-			if (i >= convertedString.length())
-				break;                 //end of the input string
-
-			if (convertedString[i] == 32)
-				continue;
-		}
-		n = val_stack.pop();         //the first current number
-		       //the second current number
-		switch (convertedString[i])
-		{
-			case '+': 
-				n1 = val_stack.pop();
-				res = Fadd(n1, n);
-				break;
-			case '-': 
-				n1 = val_stack.pop();
-				res = Sub(n1, n);
-				break;
-			case '*': 
-				n1 = val_stack.pop();
-				res = Multiply(n1, n); 
-				break;
-			case '/': 
-				n1 = val_stack.pop();
-				res = Divide(n1, n); 
-				break;
-			case '^':
-				n1 = val_stack.pop();
-				res = pow(n1, n);
-				break;
-			case 's':
-				res = Sin(n);
-				break;
-			default: 
-				throw "Ошибка";
-		}
-		val_stack.push(res);
-	}
-	return val_stack.pop();
-}

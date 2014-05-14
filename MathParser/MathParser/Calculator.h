@@ -1,11 +1,13 @@
-#include "stdafx.h"
+#include <string>
+#include <iostream>
 
-float Fadd(float a, float b);
-float Sub(float a, float b);
-float Multiply(float a, float b);
-float Divide(float a, float b);
-float Sin(float a);
-float Cos(float a);
-float Pow(float a, float b);
-float Tan(float a);
-float Cot(float a);
+using namespace std;
+
+class Calculator
+{
+	string convertedString;
+	
+public:
+	double Calculate();
+	void SetConvertedString(string str) { convertedString = str; }
+};

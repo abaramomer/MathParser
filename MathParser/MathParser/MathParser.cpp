@@ -3,18 +3,26 @@
 #include <string>
 #include "iostream"
 #include "Parser.h"
+#include "Calculator.h"
+#include "OperationsMap.h"
 #include <conio.h>
 
 using namespace std;
 int main(int argc, char* argv[])
 {
-	Parser Calculate;
+	Parser parser;
+	Calculator calculator;
 	string s;
 	cin >> s;
-	
-	Calculate.ConvertToPPN(s);
-	cout << Calculate.GetConvertedString() << endl;
-	cout << Calculate.Calculate() << endl;
+
+	s = Map(s);
+
+	parser.ConvertToPPN(s);
+	cout << parser.GetConvertedString() << endl;
+	calculator.SetConvertedString(parser.GetConvertedString());
+	cout << calculator.Calculate() << endl;
+
+
 	_getch();
 	return 0;
 }

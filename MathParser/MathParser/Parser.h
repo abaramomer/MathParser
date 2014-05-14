@@ -1,6 +1,7 @@
 
 #include <string>
 #include <iostream>
+#include "AvaibleOperations.h"
 const char EOS = 0x01, EOS_IN = 0x02;
 const int sz = 400;
 using namespace std;
@@ -42,6 +43,7 @@ class Parser
 	char currentSymbol; 
 	string str_in, convertedString;
 	int currentStringNumber;
+	AvaibleOperations *operations = new AvaibleOperations();
 
 	char NextChar()
 	{
@@ -56,7 +58,7 @@ class Parser
 
 public:
 	void ConvertToPPN(string);
-	float Calculate();
+	
 	string GetConvertedString()const { return convertedString; }
 };
 
