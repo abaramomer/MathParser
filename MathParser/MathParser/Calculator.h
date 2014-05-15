@@ -8,6 +8,6 @@ class Calculator
 	string convertedString;
 	
 public:
-	double Calculate();
+	double Calculate(string *error);
 	void SetConvertedString(string str) { convertedString = str; }
 };

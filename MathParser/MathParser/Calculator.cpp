@@ -9,14 +9,13 @@
 #include <stack>
 
 using namespace std;
-double Calculator::Calculate()
+double Calculator::Calculate(string *error)
 {
-	double seconfArgument, firstArgument, res = 0.0;
+	double secondArgument, firstArgument, res = 0.0;
 	int i;
 	
 	stack <float> values;
 	string number;
-	number.clear();
 	for (i = 0; i < convertedString.length(); ++i)
 	{
 		char c = convertedString[i];
@@ -28,24 +27,32 @@ double Calculator::Calculate()
 		}
 		if (!number.empty())
 		{
-			values.push((float)atof(number.c_str()));
+			values.push(atof(number.c_str()));
 			number.clear();
 			if (i >= convertedString.length())
-				break;                 //end of the input string
+				break;      
 
 			if (convertedString[i] == 32)
 				continue;
 		}
 		firstArgument = values.top();
 		values.pop();
-		if (!OneArgumentFunctions(convertedString[i], firstArgument, &res))
+		*error = OneArgumentFunctions(convertedString[i], firstArgument, &res);
+		if ((*error) == "n")
 		{
-			seconfArgument = values.top();
+			secondArgument = values.top();
 			values.pop();
-			TwoArgumentFunctions(convertedString[i], firstArgument, seconfArgument, &res);
+			*error = TwoArgumentFunctions(convertedString[i], secondArgument, firstArgument, &res);
+			if (*error != "")
+				return 0.0;
 		}
-	
+		else
+		{
+			if (*error != "")
+				return 0.0;
+		}
 		values.push(res);
 	}
+	*error = "";
 	return values.top();
 }

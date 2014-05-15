@@ -1,2 +1,2 @@
-bool OneArgumentFunctions(char c, double firstArgument, double *result);
-bool TwoArgumentFunctions(char c, double firstArgument, double secondArgument, double *result);
+string OneArgumentFunctions(char c, double firstArgument, double *result);
+string TwoArgumentFunctions(char c, double firstArgument, double secondArgument, double *result);

@@ -3,8 +3,9 @@
 #include "Parser.h"
 #include "Helper.h"
 #include <string>
-//
-//the priopity of the operation
+string syntaxError = "Syntax error";
+string bracketsSructError = "Incorret bracket struct";
+
 int Parser::OperationPriority(char c) 
 {
 	if (isFunction(c))
@@ -26,71 +27,63 @@ int Parser::OperationPriority(char c)
 	}
 }
 
-void Parser::ConvertToPPN(string str) 
+string Parser::ConvertToPPN(string str) 
 {
-	int was_op = 0, np = 0;    //if there were operations & brackets  
-	currentStringNumber = 0;                   //index of input string
+	int wasOperation = 0, np = 0;
+	charIndex = 0;                   
 	convertedString.clear();
 	Stack<char> operationStack;
-	str_in = str;
+	inputString = str;
 
-	if ((!isDigit(str_in[0])) && !isFunction(str_in[0]) && str_in[0] != '(')
-		throw "Ошибка синтаксиса";
+	if ((!isDigit(inputString[0])) && !isFunction(inputString[0]) && inputString[0] != '(')
+		return syntaxError;
 
 	while (NextChar() != EOS_IN) 
 	{
 		if (isDigit(currentSymbol)) 
 		{
 			Add(currentSymbol);
-			was_op = 0;
+			wasOperation = 0;
 			continue;
 		}
-
-		else
-		{
-			Add(32);
-		}
-			
-			
+		else Add(32);
 		switch (currentSymbol) 
 		{
-		case '(': 
-			operationStack.push(currentSymbol); 
-			np++; 
-			was_op = 0; 
-			break;
-		
-			
-
-		case ')':
-		{
-			while ((currentSymbol = operationStack.pop()) != '(' && np > 0)
+			case '(': 
+				operationStack.push(currentSymbol); 
+				np++; 
+				wasOperation = 0; 
+				break;
+			case ')':
 			{
-				Add(currentSymbol);
-			}
-			np--;
-			break;
-		}
-		default: 
-			if (operations->Contain(currentSymbol) && !was_op)
-			{
-				while (OperationPriority(currentSymbol) <= OperationPriority(operationStack.top()))
+				while ((currentSymbol = operationStack.pop()) != '(' && np > 0)
 				{
-					Add(operationStack.pop());
+					Add(currentSymbol);
 				}
-				if (OperationPriority(currentSymbol) > OperationPriority(operationStack.top()))
-				{
-					operationStack.push(currentSymbol);
-				}
+				np--;
 				break;
 			}
-			else
-				throw "Ошибка синтаксиса";
+			default: 
+				if (operations->Contain(currentSymbol) && !wasOperation)
+				{
+					while (OperationPriority(currentSymbol) <= OperationPriority(operationStack.top()))
+					{
+						Add(operationStack.pop());
+					}
+					if (OperationPriority(currentSymbol) > OperationPriority(operationStack.top()))
+					{
+						operationStack.push(currentSymbol);
+					}
+					break;
+				}
+				else
+					return syntaxError;
 		}
 	}
 	while (operationStack.top() != EOS)
 		Add(operationStack.pop());
 	if (np)
-		throw "Нарушение скобочной структуры";
+		return bracketsSructError;
+	return "";
 }
 
