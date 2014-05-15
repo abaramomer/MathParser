@@ -1,19 +1,19 @@
 
 #include <string>
 #include <iostream>
-#include "AvaibleOperations.h"
+#include "OperationContainer.h"
 const char EOS = 0x01, EOS_IN = 0x02;
-const int sz = 400;
+
 using namespace std;
 
 template <class T> class Stack
-{      //stack
-	T stack[sz];
+{    
+	T stack[3000];
 	int istack;
 	friend class Parser;
 
 	void push(T x) {
-		if (istack<sz)
+		if (istack<3000)
 			stack[istack++] = x;
 	}
 	T pop()
@@ -37,18 +37,17 @@ public:
 	}
 };
 
-//this class converts to PPN & Calculateulates expression
 class Parser
 {
 	char currentSymbol; 
-	string str_in, convertedString;
-	int currentStringNumber;
-	AvaibleOperations *operations = new AvaibleOperations();
+	string inputString, convertedString;
+	int charIndex;
+	OperationContainer *operations = new OperationContainer();
 
 	char NextChar()
 	{
-		if (currentStringNumber < str_in.length())
-			currentSymbol = str_in[currentStringNumber++];
+		if (charIndex < inputString.length())
+			currentSymbol = inputString[charIndex++];
 		else
 			currentSymbol = EOS_IN;
 		return currentSymbol;
@@ -57,7 +56,7 @@ class Parser
 	int OperationPriority(char c);
 
 public:
-	void ConvertToPPN(string);
+	string ConvertToPPN(string);
 	
 	string GetConvertedString()const { return convertedString; }
 };

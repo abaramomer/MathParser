@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "AssemblerCalculator.h"
+double result;
+
 double Add(double a, double b)
-{
-	double result;
+{ 
 	_asm
 	{
 		fld a;
@@ -13,8 +14,7 @@ double Add(double a, double b)
 }
 
 double Sub(double a, double b)
-{
-	double result;
+{	 
 	_asm
 	{
 		fld a;
@@ -25,8 +25,7 @@ double Sub(double a, double b)
 }
 
 double Multiply(double a, double b)
-{
-	double result;
+{	 
 	_asm
 	{
 		fld a;
@@ -38,7 +37,7 @@ double Multiply(double a, double b)
 
 double Divide(double a, double b)
 {
-	double result;
+	 
 	_asm
 	{
 		fld a;
@@ -50,7 +49,7 @@ double Divide(double a, double b)
 
 double Sin(double a)
 {
-	double result;
+	 
 	_asm
 	{
 		fld a;
@@ -61,19 +60,83 @@ double Sin(double a)
 }
 
 double Cos(double a)
-{
-	double result;
+{	 
 	_asm
 	{
-		fld a;
-		fcos;
-		fstp result;
+		fld a
+		fcos
+		fstp result
+	}
+	return result;
+}
+double ArcTan(double a)
+{
+	_asm
+	{
+		fld a
+		fld a
+		fpatan
+		fstp result
+	}
+	return result;
+}
+double ArcTan2(double a)
+{
+	_asm
+	{
+		fld a
+		fld a
+		fpatan
+		fstp result
+	}
+	return result;
+}
+double ArcCos(double a)
+{
+	_asm
+	{
+		fld   a
+		fld1
+		fadd  ST(0), ST(1)
+		fld1
+		fsub  ST(0), ST(2)
+		fmulp ST(1), ST(0)
+		fsqrt
+		fxch
+		fpatan
+		fstp result
+	}
+	return result;
+}
+double ArcSin(double a)
+{
+	_asm
+	{
+		FLD   a
+		FLD1
+		FADD  ST(0), ST(1)
+		FLD1
+		FSUB  ST(0), ST(2)
+		FMULP ST(1), ST(0)
+		FSQRT
+		fpatan
+		fstp result
+	}
+	return result;
+}
+double Abs(double a)
+{
+	_asm
+	{
+		fld a
+		fchs
+		fstp result
 	}
 	return result;
 }
 double Exp(double a)
 {
-	double result;
+	 
 	_asm
 	{     
 		fld a
@@ -94,7 +157,6 @@ double Exp(double a)
 }
 double Sqrt(double a)
 {
-	double result;
 	_asm
 	{
 		fld a
@@ -103,6 +165,51 @@ double Sqrt(double a)
 			
 	}
 	return result;
+}
+
+double Ln(double a)
+{
+	_asm
+	{
+		fldlg2
+		fld   a
+		fyl2x
+		fstp result
+	}
+	return result;
+}
+double Pow(double a, double b)
+{
+	_asm
+	{
+			fld b
+			fld a
+			fyl2x
+			fld st(0)
+			frndint
+			fsubr st(1), st
+			fxch st(1)
+			fchs
+			f2xm1
+			fld1
+			faddp st(1), st
+			fscale
+			fstp result
+	}
+	return result;
+}
+double Tan(double a)
+{
+	return Divide(Sin(a), Cos(a));
+}
+
+double Cot(double a)
+{
+	return Divide(Cos(a), Sin(a));
+}
+double Cosh(double a)
+{
+	return Add(Exp(a), Exp(-a));
 }
 double Sinh(double a)
 {

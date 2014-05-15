@@ -80,10 +80,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssemblerCalculator.h" />
-    <ClInclude Include="AvaibleOperations.h" />
+    <ClInclude Include="OperationContainer.h" />
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="FunctionsMap.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="OperationsMap.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="stdafx.h" />
@@ -91,11 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblerCalculator.cpp" />
-    <ClCompile Include="AvaibleOperations.cpp" />
+    <ClCompile Include="OperationContainer.cpp" />
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="FunctionsMap.cpp" />
     <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="MathParser.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

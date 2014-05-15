@@ -1,53 +1,99 @@
 #include "stdafx.h"
 #include "AssemblerCalculator.h"
 #include <math.h>
-bool OneArgumentFunctions(char c, double firstArgument, double *result)
+#include <string>
+using namespace std;
+string rangeError = "incorrect function range";
+
+string OneArgumentFunctions(char c, double firstArgument, double *result)
 {
+	double res;
 	switch (c)
 	{
 		case 's':
-			*result = Sin(firstArgument);
+			res = Sin(firstArgument);
 			break;
 		case 'c':
-			*result = Cos(firstArgument);
+			res = Cos(firstArgument);
 			break;
 		case 'e':
-			*result = Exp(firstArgument);
+			res = Exp(firstArgument);
 			break;
 		case 'h':
-			*result = Sinh(firstArgument);
+			res = Sinh(firstArgument);
 			break;
 		case 'q':
-			*result = Sqrt(firstArgument);
+			res = Sqrt(firstArgument);
+			break;
+		case 'a':
+			res = Abs(firstArgument);
+			break;
+		case 't':
+			res = Tan(firstArgument);
+			break;
+		case 'd':
+			res = Cot(firstArgument);
+			break;
+		case 'y':
+			res = Cosh(firstArgument);
+			break;
+		case 'l':
+			res = Ln(firstArgument);
+			break;
+		case 'r':
+			firstArgument = Abs(firstArgument);
+			if (firstArgument < 1.0)
+				res = ArcTan(firstArgument);
+			else
+				return rangeError;
+			break;
+		case 'k':
+			firstArgument = Abs(firstArgument);
+			if (firstArgument < 1.0)
+				res = ArcSin(firstArgument);
+			else
+				return rangeError;
+			break;
+		case 'b':
+			firstArgument = Abs(firstArgument);
+			if (firstArgument < 1)
+				res = ArcCos(firstArgument);
+			else
+				return rangeError;
 			break;
 		default:
-			return false;
+			return "n";
 			break;
 	}
-	return true;
+	*result = res;
+	return "";
 }
-bool TwoArgumentFunctions(char c, double firstArgument, double secondArgument, double *result)
+string TwoArgumentFunctions(char c, double firstArgument, double secondArgument, double *result)
 {
+	double res;
 	switch (c)
 	{
 	case '+':
-		*result = Add(firstArgument, secondArgument);
+		res = Add(firstArgument, secondArgument);
 		break;
 	case '-':
-		*result = Sub(firstArgument, secondArgument);
+		res = Sub(firstArgument, secondArgument);
 		break;
 	case '*':
-		*result = Multiply(firstArgument, secondArgument);
+		res = Multiply(firstArgument, secondArgument);
 		break;
 	case '/':
-		*result = Divide(firstArgument, secondArgument);
+		if (secondArgument == (double)0)
+			return "Zero div";
+		res = Divide(firstArgument, secondArgument);
 		break;
 	case '^':
-		*result = pow(firstArgument, secondArgument);
+		res = Pow(firstArgument, secondArgument);
 		break;
 	default:
-		return false;
+		return "n";
 		break;
 	}
-	return true;
+	*result = res;
+	return "";
 }
