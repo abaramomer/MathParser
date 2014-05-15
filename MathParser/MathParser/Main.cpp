@@ -16,6 +16,7 @@ void mainMenu()
 		clearConsole();
 		printMenuString("1. Calculator");
 		printMenuString("3. Help");
+		printMenuString("2. Help");
 		printMenuString("4. Exit");
 
 		cin >> choise;
