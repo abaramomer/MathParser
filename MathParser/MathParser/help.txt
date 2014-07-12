@@ -1,0 +1,34 @@
+/******* HELP FOR CALCULATOR********/
+simple operations
++ - add operation
+- - sub operation
+* - multiply operation
+/ - divide operation
+^ - power operation
+------------------------------------------------
+
+use "pi" in calculation for value pi
+------------------------------------------------
+
+functions
+abs(x) - module x
+cos(x) - sinus x
+sin(x) - cosinus x
+tan(x) - tangens x
+cot(x) - cotangens x
+asin(x) - arcsinus x
+acos(x) - arccosinus x
+log(x) - log10 x
+sinh(x) - trigonometric sinus x
+cosh(x) - trigonometric cosinus x
+------------------------------------------------
+
+history
+input "history" and view history of calculations
+
+use _ + number of history calculation to use this 
+history value in current calculation
+
+sample:
+21*_1 (_1 - first history value)
+------------------------------------------------

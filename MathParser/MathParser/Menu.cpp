@@ -7,7 +7,8 @@
 #include "Menu.h"
 #include <string>
 #include <iostream>
-
+#include <fstream>
+#include <algorithm>
 using namespace std;
 int operationsCount;
 
@@ -39,7 +40,7 @@ void calculate(string convertedString, map<string, string> *history)
 {
 	Calculator calculator;
 	string error;
-	printMenuString(convertedString);
+	//printMenuString(convertedString);
 	calculator.SetConvertedString(convertedString);
 	double result = calculator.Calculate(&error);
 	if (error == "")
@@ -64,6 +65,7 @@ void calculator()
 	{
 		printMenuString("Input expression");
 		cin >> calculatorCommand;
+		transform(calculatorCommand.begin(), calculatorCommand.end(), calculatorCommand.begin(), ::tolower);
 		if (calculatorCommand == "history")
 		{
 			for (auto it = historyTable.begin(); it != historyTable.end(); ++it)
@@ -83,4 +85,16 @@ void calculator()
 		}
 	}
 }
-
+void help()
+{
+	clearConsole();
+	ifstream stream("help.txt");
+	string readedString;
+	while (!stream.eof())
+	{
+		getline(stream, readedString);
+		printMenuString(readedString);
+	}
+	stream.close();
+	_gettch();
+}

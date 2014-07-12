@@ -30,19 +30,12 @@ int Parser::OperationPriority(char c)
 string Parser::ConvertToPPN(string str) 
 {
 	int wasOperation = 0, np = 0;
-
 	charIndex = 0; 
 	int isNegative = 1;
 	convertedString.clear();
 	Stack<char> operationStack;
 	inputString = str;
 	char c = inputString[0];
-	//if ((!isDigit(inputString[0])) && !isFunction(inputString[0]) && inputString[0] != '(' && inputString[0] != '-');
-	//	return syntaxError;
-
-
-	if ((!isDigit(inputString[0])) && !isFunction(inputString[0]) && inputString[0] != '(')
-		return syntaxError;
 
 
 	while (NextChar() != EOS_IN) 
@@ -65,8 +58,6 @@ string Parser::ConvertToPPN(string str)
 		}
 
 		else Add(32);
-
-
 
 		switch (currentSymbol) 
 		{

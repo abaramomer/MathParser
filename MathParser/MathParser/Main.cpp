@@ -16,7 +16,6 @@ void mainMenu()
 		clearConsole();
 		printMenuString("1. Calculator");
 		printMenuString("3. Help");
-		printMenuString("2. Help");
 		printMenuString("4. Exit");
 
 		cin >> choise;
@@ -24,6 +23,9 @@ void mainMenu()
 		{
 		case '1':
 			calculator();
+			break;
+		case'2':
+			help();
 			break;
 		default:
 			break;

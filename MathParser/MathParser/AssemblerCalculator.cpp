@@ -112,13 +112,13 @@ double ArcSin(double a)
 {
 	_asm
 	{
-		FLD   a
-		FLD1
-		FADD  ST(0), ST(1)
-		FLD1
-		FSUB  ST(0), ST(2)
-		FMULP ST(1), ST(0)
-		FSQRT
+		fld a
+		fld1
+		fadd  st(0), st(1)
+		fld1
+		fsub  st(0), st(2)
+		fmulp st(1), st(0)
+		fsqrt
 		fpatan
 		fstp result
 	}
@@ -182,19 +182,19 @@ double Pow(double a, double b)
 {
 	_asm
 	{
-			fld b
-			fld a
-			fyl2x
-			fld st(0)
-			frndint
-			fsubr st(1), st
-			fxch st(1)
-			fchs
-			f2xm1
-			fld1
-			faddp st(1), st
-			fscale
-			fstp result
+		fld b
+		fld a
+		fyl2x
+		fld st(0)
+		frndint
+		fsubr st(1), st
+		fxch st(1)
+		fchs
+		f2xm1
+		fld1
+		faddp st(1), st
+		fscale
+		fstp result
 	}
 	return result;
 }

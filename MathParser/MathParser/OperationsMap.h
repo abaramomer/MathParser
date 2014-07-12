@@ -10,7 +10,7 @@ map <string, string> functions =
 	{"s", "sin",  },
 	{ "3.141592", "pi" },
 	{"c", "cos",  },
-	{ "l", "ln",  },
+	{ "l", "log",  },
 	{ "a", "abs",  },
 	{ "e", "exp" },
 	{ "q", "sqrt" },
